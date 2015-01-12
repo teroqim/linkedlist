@@ -6,21 +6,23 @@ class LinkedListItem(object):
         self.obj = obj
 
 
-
 class LinkedList(object):
     '''General purpose linked list.'''
 
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.front = None
+        self.back = None
 
-    def addToBack(self, obj):
+    def add_to_back(self, obj):
         '''Append item to back of list'''
-        item = LinkedListItem(obj, self.tail, None)
-        self.tail = item
+        item = LinkedListItem(obj, self.back, None)
+        if self.back:
+            self.back.next = item
 
-        if not self.head:
-            self.head = item
+        self.back = item
+
+        if not self.front:
+            self.front = item
 
         return item
 
@@ -33,21 +35,23 @@ class LinkedList(object):
         if item.next:
             item.next.prev = item.prev
         if not (item.prev or item.next):
-            self.head = self.tail = None
+            self.front = self.back = None
 
-    def addToFront(self, obj):
+    def add_to_front(self, obj):
         '''Add item to front of list'''
-        item = LinkedListItem(obj, None, self.head)
-        self.head = item 
-        if not self.tail:
-            self.tail = item
+        item = LinkedListItem(obj, None, self.front)
+        if self.front:
+            self.front.prev = item
+        self.front = item 
+        if not self.back:
+            self.back = item
         
         return item
 
     def get_front(self):
         '''Returns the item at the front of the list. None of list is empty.'''
-        return self.head 
+        return self.front 
 
     def get_back(self):
         '''Returns item at the back of the list, None if list is empty.'''
-        return self.tail 
+        return self.back 
