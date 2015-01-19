@@ -12,6 +12,7 @@ class LinkedList(object):
     def __init__(self):
         self.front = None
         self.back = None
+        self.length = 0
 
     def add_to_back(self, obj):
         '''Append item to back of list'''
@@ -23,11 +24,17 @@ class LinkedList(object):
 
         if not self.front:
             self.front = item
+        
+        self.length += 1
 
         return item
 
     def remove(self, item):
         '''Remove item from list. '''
+        #NOTE: There is a big issue with using 'self' here since item
+        #is not necessarily from this list. Need to either make this
+        #into either a static method or bind items to lists to
+        #prevent this issue.
         if not isinstance(item, LinkedListItem):
             raise Exception('item must be of class LinkedListItem')
         if item.prev:
@@ -36,6 +43,9 @@ class LinkedList(object):
             item.next.prev = item.prev
         if not (item.prev or item.next):
             self.front = self.back = None
+            self.length = 0
+        else:
+            self.length -= 1
 
     def add_to_front(self, obj):
         '''Add item to front of list'''
@@ -45,7 +55,7 @@ class LinkedList(object):
         self.front = item 
         if not self.back:
             self.back = item
-        
+        self.length += 1 
         return item
 
     def get_front(self):

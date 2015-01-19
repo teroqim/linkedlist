@@ -1,4 +1,4 @@
-from linkedlist import LinkedList 
+from linkedlist import LinkedList, LinkedListItem
 
 class TestLinkedList:
 
@@ -58,6 +58,11 @@ class TestLinkedList:
         assert front.next.obj == back.obj
         assert back.prev.obj == front.obj
 
+    def test_remove_on_empty_list_raise_no_exception(self):
+        linked_list = LinkedList()
+        item = LinkedListItem(123, None, None)
+        linked_list.remove(item)
+
     def test_add_to_back_next(self):
         '''Adding to back makes previous back item the item before the new
         back'''
@@ -78,3 +83,36 @@ class TestLinkedList:
         linked_list.add_to_front(item2)
         assert linked_list.get_front().next.obj == item1
         assert linked_list.get_front().next.prev.obj == item2
+
+    def test_empty_list_has_0_lenght(self):
+        linked_list = LinkedList()
+        assert linked_list.length == 0
+
+    def test_non_empty_list_has_length(self):
+        linked_list = LinkedList()
+        item1 = 123
+        item2 = 34234
+        item3 = 1212
+        linked_list.add_to_front(item1)
+        assert linked_list.length == 1
+        linked_list.add_to_back(item2)
+        assert linked_list.length == 2
+        linked_list.add_to_front(item3)
+        assert linked_list.length == 3
+
+    def test_removing_items_reduces_length(self):
+        linked_list = LinkedList()
+        ritem = LinkedListItem(1414141414, None, None)
+        linked_list.remove(ritem)
+        assert linked_list.length == 0
+        linked_list.add_to_front(123)
+        linked_list.add_to_front(12312)
+        assert linked_list.length == 2
+        item = linked_list.get_front()
+        linked_list.remove(item)
+        assert linked_list.length == 1
+        item = linked_list.get_front()
+        linked_list.remove(item)
+        assert linked_list.length == 0
+
+
