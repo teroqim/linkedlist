@@ -1,1 +1,1 @@
-from linked_list import LinkedList, LinkedListItem
+from linked_list import LinkedList
