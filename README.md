@@ -2,7 +2,7 @@ linkedlist
 ==========
 Linked list data structure implemented in Python.
 
-This project uses semantic versioning v2.0.0 (http://semver.org/).
+This project is using [semantic versioning](http://semver.org/).
 
 Installation
 ------------
@@ -49,7 +49,7 @@ print front.next.obj
 
 Running tests
 -------------
-Install `pytest <http://pytest.org/latest/getting-started.html>`,
+Install [pytest](http://pytest.org/latest/getting-started.html),
 then simply run the following command from the root folder:
 
 ```
@@ -64,4 +64,4 @@ Contributing
 
 Maintainer
 ----------
-Peter Andersson <teroqim@gmail.com> `@teroqim <https://github.com/teroqim>`
+Peter Andersson \<teroqim@gmail.com\> [@teroqim](https://github.com/teroqim)
