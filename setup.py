@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='linkedlist',
-     version='1.0.0',
+     version='1.0.1',
      description='General purpose linked list',
      url='https://github.com/teroqim/linkedlist',
      author='Peter Andersson',
