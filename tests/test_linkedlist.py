@@ -6,8 +6,8 @@ class TestLinkedList:
     def test_init(self):
         '''There are no front or back in a newly initialized list'''
         ll = LinkedList()
-        assert ll.get_front() == None
-        assert ll.get_back() == None
+        assert ll.front == None
+        assert ll.back == None
 
     def test_add_to_empty_list(self):
         '''
@@ -18,19 +18,19 @@ class TestLinkedList:
         key = 12
         value = "asd"
         ll.add_to_back(key, value)
-        assert ll.get_back().key == key
-        assert ll.get_front().key == key
-        assert ll.get_back().value == value
-        assert ll.get_front().value == value
+        assert ll.back.key == key
+        assert ll.front.key == key
+        assert ll.back.value == value
+        assert ll.front.value == value
         
         ll = LinkedList()
         key = 18
         value = "llk"
         ll.add_to_front(key, value)
-        assert ll.get_back().key == key
-        assert ll.get_front().key == key
-        assert ll.get_back().value == value
-        assert ll.get_front().value == value
+        assert ll.back.key == key
+        assert ll.front.key == key
+        assert ll.back.value == value
+        assert ll.front.value == value
 
     def test_add_to_empty_back_gives_new_front(self):
         '''Adding an item to the back of an empty list also creates a front
@@ -39,11 +39,11 @@ class TestLinkedList:
         key = 12
         value = "asd"
         ll.add_to_back(key, value)
-        assert ll.get_back().key == key
-        assert ll.get_front().key == key
-        assert ll.get_back().value == value
-        assert ll.get_front().value == value
-        assert ll.get_front() == ll.get_back()
+        assert ll.back.key == key
+        assert ll.front.key == key
+        assert ll.back.value == value
+        assert ll.front.value == value
+        assert ll.front == ll.back
 
     def test_add_to_empty_front_gives_new_back(self):
         '''Adding an item to the front of an empty list also creates a back
@@ -52,27 +52,27 @@ class TestLinkedList:
         key = 12
         value = "asd"
         ll.add_to_front(key, value)
-        assert ll.get_back().key == key
-        assert ll.get_front().key == key
-        assert ll.get_back().value == value
-        assert ll.get_front().value == value
-        assert ll.get_front() == ll.get_back()
+        assert ll.back.key == key
+        assert ll.front.key == key
+        assert ll.back.value == value
+        assert ll.front.value == value
+        assert ll.front == ll.back
 
     def test_last_item_point_to_none(self):
         '''Item at the back has None as next pointer'''
         ll = LinkedList()
         ll.add_to_back(0, 23)
-        assert ll.get_back().next == None
+        assert ll.back.next == None
         ll.add_to_back(123, 234)
-        assert ll.get_back().next == None
+        assert ll.back.next == None
 
     def test_prev_from_front_is_none(self):
         '''Item at the front has None as prev pointer'''
         ll = LinkedList()
         ll.add_to_front(0, 98)
-        assert ll.get_front().prev == None
+        assert ll.front.prev == None
         ll.add_to_front(123, 98)
-        assert ll.get_front().prev == None
+        assert ll.front.prev == None
 
     def test_add_back_appends_item(self):
         '''Adding to the back of the list multiple times does not remove items.
@@ -80,8 +80,8 @@ class TestLinkedList:
         ll = LinkedList()
         ll.add_to_back(12, 345)
         ll.add_to_back(14, 34)
-        assert ll.get_back().key == 14
-        assert ll.get_back().prev.key == 12
+        assert ll.back.key == 14
+        assert ll.back.prev.key == 12
 
     def test_add_front_prepends_item(self):
         '''Adding to the front of the list multiple times does not remove items.
@@ -89,8 +89,8 @@ class TestLinkedList:
         ll = LinkedList()
         ll.add_to_front(12, 54)
         ll.add_to_front(14, 98)
-        assert ll.get_front().key == 14
-        assert ll.get_front().next.key == 12
+        assert ll.front.key == 14
+        assert ll.front.next.key == 12
 
     def test_add_front_multiple_equal_items(self):
         '''Adding the same item to the front of the list multiple times creates
@@ -98,8 +98,8 @@ class TestLinkedList:
         ll = LinkedList()
         ll.add_to_front(12)
         ll.add_to_front(12)
-        assert ll.get_front().key == ll.get_front().next.key 
-        assert ll.get_front() != ll.get_front().next 
+        assert ll.front.key == ll.front.next.key 
+        assert ll.front != ll.front.next 
 
     def test_add_back_multiple_equal_items(self):
         '''Adding the same item to the back of the list multiple times creates
@@ -107,8 +107,8 @@ class TestLinkedList:
         ll = LinkedList()
         ll.add_to_back(12)
         ll.add_to_back(12)
-        assert ll.get_back().key == ll.get_back().prev.key 
-        assert ll.get_back() != ll.get_back().prev 
+        assert ll.back.key == ll.back.prev.key 
+        assert ll.back != ll.back.prev 
 
     def test_remove(self):
         '''Removing an item brings adjacent items together'''
@@ -119,8 +119,8 @@ class TestLinkedList:
         ll.add_to_back(key1)
         ll.add_to_back(key2)
         ll.add_to_back(key3)
-        front = ll.get_front()
-        back = ll.get_back()
+        front = ll.front
+        back = ll.back
         middle = front.next
         ll.remove(middle)
         assert front.next == back
@@ -134,8 +134,8 @@ class TestLinkedList:
         key2 = 1233
         ll.add_to_back(key1)
         ll.add_to_back(key2)
-        assert ll.get_back().prev.key == key1
-        assert ll.get_back().prev.next.key == key2
+        assert ll.back.prev.key == key1
+        assert ll.back.prev.next.key == key2
 
     def test_add_to_front_prev(self):
         '''Add to front places previous front after the new front'''
@@ -144,8 +144,8 @@ class TestLinkedList:
         key2 = 1233
         ll.add_to_front(key1)
         ll.add_to_front(key2)
-        assert ll.get_front().next.key == key1
-        assert ll.get_front().next.prev.key == key2
+        assert ll.front.next.key == key1
+        assert ll.front.next.prev.key == key2
 
     def test_empty_list_has_0_lenght(self):
         ll = LinkedList()
@@ -166,10 +166,10 @@ class TestLinkedList:
         ll.add_to_front(123)
         ll.add_to_front(12312)
         assert ll.length == 2
-        item = ll.get_front()
+        item = ll.front
         ll.remove(item)
         assert ll.length == 1
-        item = ll.get_front()
+        item = ll.front
         ll.remove(item)
         assert ll.length == 0
 
@@ -178,7 +178,7 @@ class TestLinkedList:
             ll = LinkedList()
             linked_list2 = LinkedList()
             ll.add_to_front(123)
-            list_item = ll.get_front()
+            list_item = ll.front
             linked_list2.remove(list_item)
 
     def test_removed_item_has_no_parent(self):
@@ -204,18 +204,18 @@ class TestLinkedList:
         ll = LinkedList()
         item1 = ll.add_to_front(1234)
         item2 = ll.add_to_front(list())
-        assert ll.get_front() == item2
+        assert ll.front == item2
         ll.remove(item2)
-        assert ll.get_front() == item1
+        assert ll.front == item1
 
     def test_remove_updates_back_if_necessary(self):
         '''Removing back updates back'''
         ll = LinkedList()
         item1 = ll.add_to_back(123)
         item2 = ll.add_to_back("lkj")
-        assert ll.get_back() == item2
+        assert ll.back == item2
         ll.remove(item2)
-        assert ll.get_back() == item1
+        assert ll.back == item1
 
     def test_remove_all_items_deletes_front_and_back(self):
         ll = LinkedList()
@@ -223,8 +223,8 @@ class TestLinkedList:
         item2 = ll.add_to_back([1,2,3])
         ll.remove(item2)
         ll.remove(item1)
-        assert ll.get_front() == None
-        assert ll.get_back() == None
+        assert ll.front == None
+        assert ll.back == None
 
     def test_find_first_finds_first(self):
         ll = LinkedList()
@@ -263,9 +263,9 @@ class TestLinkedList:
     def test_insert_after_updates_back(self):
         ll = LinkedList()
         item1 = ll.add_to_front(5151, 91951)
-        assert ll.get_back() == item1
+        assert ll.back == item1
         item2 = ll.insert_after(item1, 123, 234)
-        assert ll.get_back() == item2
+        assert ll.back == item2
 
     def test_insert_after(self):
         ll = LinkedList()
@@ -314,9 +314,9 @@ class TestLinkedList:
     def test_insert_before_updates_front(self):
         ll = LinkedList()
         item1 = ll.add_to_back(5151, 91951)
-        assert ll.get_front() == item1
+        assert ll.front == item1
         item2 = ll.insert_before(item1, 123, 234)
-        assert ll.get_front() == item2
+        assert ll.front == item2
 
     def test_insert_before(self):
         ll = LinkedList()
@@ -367,7 +367,7 @@ class TestLinkedList:
         ll = LinkedList()
         item1 = ll.add_to_front(123, 8907067)
         ll2 = ll.map(None)
-        item2 = ll2.get_front()
+        item2 = ll2.front
         assert item1.key == item2.key
         assert item1.value == item2.value
         assert ll.length == ll2.length
@@ -383,8 +383,8 @@ class TestLinkedList:
         item2 = ll.add_to_front("", 2345)
         item3 = ll.add_to_front([1,2,3], 234)
         ll2 = ll.map(lambda x, y: (x, False))
-        ll_current = ll.get_front()
-        ll2_current = ll2.get_front()
+        ll_current = ll.front
+        ll2_current = ll2.front
         assert ll.length == ll2.length and ll.length == 3 
         while ll_current:
             assert ll_current.key == ll2_current.key
@@ -397,16 +397,16 @@ class TestLinkedList:
         ll.add_to_front(123, 123123)
         ll.add_to_front(234234, 92834923)
         ll2 = ll.map(None)
-        assert ll.get_front().key == ll2.get_front().key
-        assert ll.get_front().value == ll2.get_front().value
-        assert ll.get_back().key == ll2.get_back().key
-        assert ll.get_back().value == ll2.get_back().value
+        assert ll.front.key == ll2.front.key
+        assert ll.front.value == ll2.front.value
+        assert ll.back.key == ll2.back.key
+        assert ll.back.value == ll2.back.value
 
     def test_map_creates_new_items(self):
         ll = LinkedList()
         item1 = ll.add_to_front(12, 3534536)
         ll2 = ll.map(None)
-        item2 = ll2.get_front()
+        item2 = ll2.front
         assert item1 != item2
         assert item1.key == item2.key
         assert item2.value == item2.value
@@ -417,7 +417,7 @@ class TestLinkedList:
         ll = LinkedList()
         item1 = ll.add_to_front(123, 8907067)
         ll.in_map(None)
-        assert item1 == ll.get_front()
+        assert item1 == ll.front
 
     def test_in_map_applies_func_to_all_keys_and_values(self):
         ll = LinkedList()
@@ -426,7 +426,7 @@ class TestLinkedList:
         item3 = ll.add_to_front([1,2,3], 234)
         ll.in_map(lambda x, y: (True, False))
         assert ll.length == 3 
-        ll_current = ll.get_front()
+        ll_current = ll.front
         while ll_current:
             assert ll_current.key == True
             assert ll_current.value == False
@@ -438,7 +438,7 @@ class TestLinkedList:
         ll = LinkedList()
         item1 = ll.add_to_front(123, 8907067)
         ll2 = ll.filter(None)
-        item2 = ll2.get_front()
+        item2 = ll2.front
         assert item1.key == item2.key
         assert item1.value == item2.value
         assert ll.length == ll2.length
@@ -454,8 +454,8 @@ class TestLinkedList:
         item2 = ll.add_to_front("", 2345)
         item3 = ll.add_to_front([1,2,3], 234)
         ll2 = ll.filter(lambda x, y: True)
-        ll_current = ll.get_front()
-        ll2_current = ll2.get_front()
+        ll_current = ll.front
+        ll2_current = ll2.front
         assert ll.length == ll2.length and ll.length == 3 
         while ll_current:
             assert ll_current.key == ll2_current.key
@@ -468,16 +468,16 @@ class TestLinkedList:
         ll.add_to_front(123, 123123)
         ll.add_to_front(234234, 92834923)
         ll2 = ll.filter(None)
-        assert ll.get_front().key == ll2.get_front().key
-        assert ll.get_front().value == ll2.get_front().value
-        assert ll.get_back().key == ll2.get_back().key
-        assert ll.get_back().value == ll2.get_back().value
+        assert ll.front.key == ll2.front.key
+        assert ll.front.value == ll2.front.value
+        assert ll.back.key == ll2.back.key
+        assert ll.back.value == ll2.back.value
 
     def test_filter_creates_new_items(self):
         ll = LinkedList()
         item1 = ll.add_to_front(12, 3534536)
         ll2 = ll.filter(None)
-        item2 = ll2.get_front()
+        item2 = ll2.front
         assert item1 != item2
         assert item1.key == item2.key
         assert item2.value == item2.value
@@ -488,8 +488,8 @@ class TestLinkedList:
         item2 = ll.add_to_front(51515, 15151551)
         item3 = ll.add_to_front(987, 234267)
         assert ll.length == 3
-        assert ll.get_front() == item3
-        assert ll.get_back() == item1
+        assert ll.front == item3
+        assert ll.back == item1
         ll2 = ll.filter(lambda x,y: False)
         assert ll2.length == 0
 
@@ -502,10 +502,10 @@ class TestLinkedList:
         item5 = ll.add_to_back(7, 789235)
         ll2 = ll.filter(lambda x,y: x==1)
         assert ll2.length == 2
-        assert ll2.get_front().key == item1.key
-        assert ll2.get_front().value == item1.value
-        assert ll2.get_back().key == item4.key
-        assert ll2.get_back().value == item4.value
+        assert ll2.front.key == item1.key
+        assert ll2.front.value == item1.value
+        assert ll2.back.key == item4.key
+        assert ll2.back.value == item4.value
 
     #================== in_filter ============
 
@@ -513,8 +513,8 @@ class TestLinkedList:
         ll = LinkedList()
         item1 = ll.add_to_front(123, 8907067)
         ll.in_filter(None)
-        assert item1.key == ll.get_front().key
-        assert item1.value == ll.get_front().value
+        assert item1.key == ll.front.key
+        assert item1.value == ll.front.value
         assert ll.length == 1
 
     def test_in_filter_applies_func_to_all_items(self):
@@ -523,7 +523,7 @@ class TestLinkedList:
                     ll.add_to_back("", 2345),
                     ll.add_to_back([1,2,3], 234)]
         ll.in_filter(lambda x, y: True)
-        ll_current = ll.get_front()
+        ll_current = ll.front
         assert ll.length == 3 
         i = 0
         while ll_current:
@@ -536,8 +536,8 @@ class TestLinkedList:
         item1 = ll.add_to_front(123, 123123)
         item2 = ll.add_to_front(234234, 92834923)
         ll.in_filter(None)
-        assert ll.get_front() == item2
-        assert ll.get_back() == item1 
+        assert ll.front == item2
+        assert ll.back == item1 
 
     def test_in_filter_remove_all(self):
         ll = LinkedList()
@@ -557,8 +557,8 @@ class TestLinkedList:
         item5 = ll.add_to_back(7, 789235)
         ll.in_filter(lambda x,y: x==1)
         assert ll.length == 2
-        assert ll.get_front() == item1
-        assert ll.get_back() == item4
+        assert ll.front == item1
+        assert ll.back == item4
 
     #============== swap_places =============
 
@@ -571,22 +571,22 @@ class TestLinkedList:
         with pytest.raises(Exception):
             ll.swap(item1, None)
         assert ll.length == 1
-        assert ll.get_front() == item1
+        assert ll.front == item1
         with pytest.raises(Exception):
             ll.swap(None, item1)
         assert ll.length == 1
-        assert ll.get_front() == item1
+        assert ll.front == item1
 
     def test_swap_same_no_effect(self):
         ll = LinkedList()
         item1 = ll.add_to_back(123, 91284)
         item2 = ll.add_to_back(51515, 192)
-        assert ll.get_front() == item1
-        assert ll.get_back() == item2
+        assert ll.front == item1
+        assert ll.back == item2
         assert ll.length == 2
         ll.swap(item1, item1)
-        assert ll.get_front() == item1
-        assert ll.get_back() == item2
+        assert ll.front == item1
+        assert ll.back == item2
         assert ll.length == 2
 
     def test_swap_only_items_from_list(self):
@@ -602,14 +602,14 @@ class TestLinkedList:
         item1 = ll.add_to_front(1414, 1414)
         item2 = ll.add_to_back(431, 4321)
         ll.swap(item1, item2)
-        ll.get_front() == item2
+        ll.front == item2
 
     def test_swap_back(self):
         ll = LinkedList()
         item1 = ll.add_to_front(1414, 1414)
         item2 = ll.add_to_back(431, 4321)
         ll.swap(item1, item2)
-        ll.get_back() == item1
+        ll.back == item1
 
     def test_swap_preserves_length(self):
         ll = LinkedList()

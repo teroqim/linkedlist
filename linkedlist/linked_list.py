@@ -66,14 +66,6 @@ class LinkedList(object):
         self.length += 1 
         return item
 
-    def get_front(self):
-        '''Returns the item at the front of the list. None of list is empty. O(1)'''
-        return self.front 
-
-    def get_back(self):
-        '''Returns item at the back of the list, None if list is empty. O(1)'''
-        return self.back 
-
     def find_first(self, key):
         '''Returns the item for the first occurence of |key|. None if not in list. O(n)'''
         current = self.front
